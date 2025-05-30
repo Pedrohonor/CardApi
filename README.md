@@ -1,33 +1,54 @@
-# CARD
 
-*Card* é uma aplicação web moderna desenvolvida com foco em desempenho, usabilidade e arquitetura escalável. O sistema foi projetado para exibir e organizar cards colecionáveis, podendo ser utilizado em diversos contextos — como álbuns digitais, catálogos de figurinhas ou vitrines virtuais.
----
+📁 Estrutura e Explicação do Front-end - CRUD Figurinhas da Copa
 
-## Tecnologias Utilizadas
+🛠️ Tecnologias Utilizadas:
+- React Native: Framework principal usado para criar o app mobile.
+- JavaScript (ES6): Linguagem de programação usada nos componentes.
+- React Navigation: Para navegação entre telas (Home, Add, Edit).
+- StyleSheet: Para estilos customizados com CSS-in-JS.
+- Imagens locais: Ícones e plano de fundo salvos na pasta /imagens.
 
-### 🖥️ Front-end
-- *React* — Biblioteca JavaScript para construção de interfaces reativas.
-- *Neave UI* — Interface moderna e minimalista, com foco em responsividade.
-- *JavaScript (ES6+)* — Lógica da aplicação, manipulação de dados e interatividade.
+🗂️ Estrutura de Pastas:
+src/
+│
+├── componentes/
+│   ├── home.js          ← Tela inicial com listagem dos cards
+│   ├── add.js           ← Tela para adicionar nova figurinha
+│   ├── edit.js          ← Tela para editar uma figurinha existente
+│   ├── homeStyles.js    ← Estilização da tela Home
+│   ├── addStyles.js     ← Estilização da tela Add
+│   └── editStyles.js    ← Estilização da tela Edit
+│
+├── imagens/             ← Contém imagens utilizadas no app (plano de fundo, ícones, etc)
+│
+├── App.js               ← Arquivo principal que inicializa as rotas
+├── index.js             ← Ponto de entrada da aplicação
 
-### Back-end
-- *Node.js* — Ambiente de execução para JavaScript no servidor.
-- *Express.js*  — Framework para estruturação de APIs REST.
-- *Integração com banco de dados* (futuro) — Preparado para conectar com soluções como PostgreSQL ou MongoDB.
+🧩 Explicação das Telas
 
----
+🏠 Home.js (Tela inicial)
+- Exibe todos os cards cadastrados em um ScrollView.
+- Mostra nome, número, posição, seleção e imagem do jogador.
+- Botões de editar (ícone de lápis) e excluir (ícone de lixeira).
+- Botão flutuante + leva à tela Add.
+- Usa imagem de fundo e SafeAreaView para layout responsivo.
 
-## Objetivo do Projeto
+➕ Add.js (Adicionar Figurinha)
+- Campos de input: Nome, Número, Posição, Seleção e URL da imagem.
+- Preview da imagem digitada via URL.
+- Dois botões: LISTAR (volta para home) e ADD (executaria o cadastro).
+- Os dados ainda não estão conectados a um backend, mas a estrutura está pronta para isso.
 
-O projeto *Card* tem como principal objetivo oferecer uma solução visual e funcional para gerenciamento e exibição de colecionáveis. A aplicação foi desenvolvida com foco em design limpo, usabilidade fluida e estrutura de código clara, podendo ser facilmente estendida ou adaptada para diferentes finalidades — como portfólios visuais, vitrines de produtos ou acervos digitais.
+✏️ Edit.js (Editar Figurinha)
+- Preenche os campos com os dados do card selecionado.
+- Permite editar nome, seleção, número e posição.
+- Botões VOLTAR (cancela a edição) e SALVAR (console.log com os dados).
+- Exibe a imagem atual da figurinha no topo.
+- Usa KeyboardAvoidingView para evitar sobreposição do teclado nos campos.
 
----
-
-## Problema Resolvido
-
-Soluções tradicionais para exibição e organização de itens visuais muitas vezes pecam na usabilidade ou na escalabilidade. O *Card* resolve esses desafios ao oferecer:
-
-- Layout moderno, responsivo e amigável ao usuário;
-- Organização modular do código, com reutilização de componentes;
-- Base pronta para integração com back-end completo e banco de dados;
-- Estrutura ideal para projetos que precisam combinar estética com performance.
+💡 Observações
+- Os dados dos cards são armazenados em um useState, mas ainda não persistem (sem banco local ou API).
+- A navegação entre telas está funcionando com navigation.navigate() e navigation.goBack().
+- Visual moderno com imagem de fundo, cantos arredondados, fontes personalizadas, e organização limpa.
+- Layout responsivo com uso de Dimensions para dimensionar os cards com base no tamanho da tela.
+- Algumas funções como "salvar" e "adicionar" ainda não persistem os dados (ponto a desenvolver).

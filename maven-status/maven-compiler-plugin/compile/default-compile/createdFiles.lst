@@ -1,5 +1,0 @@
-CardApi\Service\CardService.class
-CardApi\Repository\CardRepository.class
-CardApi\Model\Card.class
-CardApi\Controller\CardController.class
-CardApi\CardApiApplication.class

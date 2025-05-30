@@ -1,33 +1,83 @@
-# CARD
+📄 Documentação Técnica — Back-End Node.js com PostgreSQL (Neon)
+🔧 Visão Geral
+Este projeto implementa um sistema de gerenciamento de cards de jogadores utilizando Node.js e PostgreSQL via Neon (serverless). A conexão com o banco de dados é configurada com segurança usando variáveis de ambiente.
 
-*Card* é uma aplicação web moderna desenvolvida com foco em desempenho, usabilidade e arquitetura escalável. O sistema foi projetado para exibir e organizar cards colecionáveis, podendo ser utilizado em diversos contextos — como álbuns digitais, catálogos de figurinhas ou vitrines virtuais.
----
+🗂️ Estrutura dos Arquivos
 
-## Tecnologias Utilizadas
+  db.js
+-Configura a conexão com o banco de dados PostgreSQL através de @neondatabase/serverless.
 
-### 🖥️ Front-end
-- *React* — Biblioteca JavaScript para construção de interfaces reativas.
-- *Neave UI* — Interface moderna e minimalista, com foco em responsividade.
-- *JavaScript (ES6+)* — Lógica da aplicação, manipulação de dados e interatividade.
+-As credenciais são carregadas do arquivo .env com dotenv para manter a segurança.
 
-### Back-end
-- *Node.js* — Ambiente de execução para JavaScript no servidor.
-- *Express.js*  — Framework para estruturação de APIs REST.
-- *Integração com banco de dados* (futuro) — Preparado para conectar com soluções como PostgreSQL ou MongoDB.
+-Exporta o objeto sql para execução de consultas SQL.
 
----
+  jogadorController.js
+Contém as funções para manipulação dos cards:
 
-## Objetivo do Projeto
+-buscarCards(): Retorna todos os cards, ordenados por ID de forma decrescente.
 
-O projeto *Card* tem como principal objetivo oferecer uma solução visual e funcional para gerenciamento e exibição de colecionáveis. A aplicação foi desenvolvida com foco em design limpo, usabilidade fluida e estrutura de código clara, podendo ser facilmente estendida ou adaptada para diferentes finalidades — como portfólios visuais, vitrines de produtos ou acervos digitais.
+-buscarCardId(req, res): Busca um card específico por ID.
 
----
+-adicionarCard(req, res): Insere um novo card no banco de dados.
 
-## Problema Resolvido
+-atualizarCard(req, res): Atualiza um card existente. 
 
-Soluções tradicionais para exibição e organização de itens visuais muitas vezes pecam na usabilidade ou na escalabilidade. O *Card* resolve esses desafios ao oferecer:
+-deletarCard(req, res): Remove um card do banco de dados.
 
-- Layout moderno, responsivo e amigável ao usuário;
-- Organização modular do código, com reutilização de componentes;
-- Base pronta para integração com back-end completo e banco de dados;
-- Estrutura ideal para projetos que precisam combinar estética com performance.
+  jogadorRoutes.js
+Define as rotas para as operações sobre os cards:
+
+-GET /cards/: Chama buscarCards()
+
+-GET /cards/:id: Chama buscarCardId()
+
+-POST /cards/: Chama adicionarCard()
+
+-PUT /cards/:id: Chama atualizarCard()
+
+-DELETE /cards/:id: Chama deletarCard()
+
+  server.js
+Configura o servidor com Express.
+
+Habilita CORS e parsing de JSON.
+
+Carrega as rotas e cria automaticamente a tabela cards caso ela não exista.
+
+Inicia o servidor na porta definida em process.env.PORT.
+
+🌐 Variáveis de Ambiente (.env)
+
+ -PGDATABASE=neondb
+
+ -PGPASSWORD=...
+
+ -PGUSER=neondb_owner
+
+ -PGHOST=...
+
+ -PORT=3000
+
+📦 Tecnologias Usadas
+
+ -Node.js
+
+ -Express
+
+ -PostgreSQL (Neon)
+
+ -dotenv
+
+ -cors
+
+ -@neondatabase/serverless
+
+✅ Observações
+
+Arquitetura modular, com controllers e rotas bem definidos.
+
+Uso seguro de credenciais com o arquivo .env.
+
+Escalável e pronto para ser hospedado em ambientes serverless ou containers.
+
+Ideal para sistemas que precisam manipular dados relacionais de forma eficiente.

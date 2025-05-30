@@ -1,83 +1,116 @@
-📄 Documentação Técnica — Back-End Node.js com PostgreSQL (Neon)
-🔧 Visão Geral
-Este projeto implementa um sistema de gerenciamento de cards de jogadores utilizando Node.js e PostgreSQL via Neon (serverless). A conexão com o banco de dados é configurada com segurança usando variáveis de ambiente.
+ Objetivo do Projeto
+A Card API é uma aplicação backend desenvolvida com Java e o framework Spring Boot, que serve como base para um sistema de gerenciamento de figurinhas da Copa do Mundo. Seu objetivo é permitir a criação, consulta, atualização e remoção de figurinhas de jogadores, com dados como nome, número, posição, seleção e URL da imagem.
 
-🗂️ Estrutura dos Arquivos
+Essa API é ideal para ser usada em conjunto com um site ou aplicativo que exiba ou organize essas figurinhas.
 
-  db.js
--Configura a conexão com o banco de dados PostgreSQL através de @neondatabase/serverless.
+🏗️ Tecnologias Utilizadas
+Tecnologia	Finalidade
+Java 17+	Linguagem principal
+Spring Boot	Framework para criar APIs REST
+Maven	Gerenciador de dependências
+Spring Data JPA	Comunicação com banco de dados
+H2 (ou outro)	Banco de dados relacional (pode ser local ou remoto)
+IntelliJ IDEA	Ambiente de desenvolvimento sugerido
 
--As credenciais são carregadas do arquivo .env com dotenv para manter a segurança.
+🔍 Explicação dos Componentes
+📦 Card.java (Model)
+Classe que representa os dados de uma figurinha:
 
--Exporta o objeto sql para execução de consultas SQL.
+-private Long id;
 
-  jogadorController.js
-Contém as funções para manipulação dos cards:
+-private String name;
+-private int number;
+-private String position;
+-private String team;
+-private String imageUrl;
 
--buscarCards(): Retorna todos os cards, ordenados por ID de forma decrescente.
+id: chave primária (gerada automaticamente)
 
--buscarCardId(req, res): Busca um card específico por ID.
+name: nome do jogador
 
--adicionarCard(req, res): Insere um novo card no banco de dados.
+number: número da figurinha
 
--atualizarCard(req, res): Atualiza um card existente. 
+position: posição do jogador em campo
 
--deletarCard(req, res): Remove um card do banco de dados.
+team: seleção à qual pertence
 
-  jogadorRoutes.js
-Define as rotas para as operações sobre os cards:
+imageUrl: link para a imagem da figurinha
 
--GET /cards/: Chama buscarCards()
 
--GET /cards/:id: Chama buscarCardId()
+🧠 CardService.java (Service)
+Essa classe contém a lógica de negócio da aplicação. Ela recebe as chamadas do Controller e usa o Repository para acessar o banco de dados.
 
--POST /cards/: Chama adicionarCard()
+Funções:
 
--PUT /cards/:id: Chama atualizarCard()
+Buscar todas as figurinhas
 
--DELETE /cards/:id: Chama deletarCard()
+Buscar figurinha por ID
 
-  server.js
-Configura o servidor com Express.
+Criar nova figurinha
 
-Habilita CORS e parsing de JSON.
+Atualizar uma existente
 
-Carrega as rotas e cria automaticamente a tabela cards caso ela não exista.
+Deletar figurinha
 
-Inicia o servidor na porta definida em process.env.PORT.
+🧰 CardRepository.java (Repository)
+Interface que estende JpaRepository, fornecendo métodos prontos para:
 
-🌐 Variáveis de Ambiente (.env)
+findAll()
 
- -PGDATABASE=neondb
+findById(id)
 
- -PGPASSWORD=...
+save(objeto)
 
- -PGUSER=neondb_owner
+deleteById(id)
 
- -PGHOST=...
+Não é necessário escrever SQL manual.
 
- -PORT=3000
+🌐 CardController.java (Controller)
+É o ponto de entrada da API. Define os endpoints REST, como:
 
-📦 Tecnologias Usadas
+Método HTTP	Endpoint	Descrição
+GET	/cards	Lista todas as figurinhas
+GET	/cards/{id}	Retorna uma figurinha por ID
+POST	/cards	Cadastra uma nova figurinha
+PUT	/cards/{id}	Atualiza uma figurinha existente
+DELETE	/cards/{id}	Remove uma figurinha
 
- -Node.js
+▶️ Como Executar o Projeto
+Pré-requisitos:
 
- -Express
+Java 17 ou superior
 
- -PostgreSQL (Neon)
+Maven
 
- -dotenv
+Passos:
 
- -cors
+Abrir o projeto no IntelliJ IDEA
 
- -@neondatabase/serverless
+Rodar o projeto pela classe CardApiApplication.java
 
-✅ Observações
+Ou via terminal:
+./mvnw spring-boot:run
+A API estará acessível em:
+📍 http://localhost:8080/cards
 
-Arquitetura modular, com controllers e rotas bem definidos.
+🧪 Testes
+O arquivo CardApplicationTests.java contém testes básicos para verificar se a aplicação sobe corretamente.
 
-Uso seguro de credenciais com o arquivo .env.
+Para rodar testes:
+./mvnw test
 
-Escalável e pronto para ser hospedado em ambientes serverless ou containers.
+🚀 Possibilidades de Expansão
+Você pode:
 
-Ideal para sistemas que precisam manipular dados relacionais de forma eficiente.
+-Conectar a um banco de dados PostgreSQL na nuvem
+
+-Adicionar autenticação (JWT)
+
+-Criar uma interface web (com React, Angular ou outro)
+
+-Gerar QR Codes com os dados das figurinhas
+
+-Permitir upload de imagem ao invés de usar URL
+
+📝 Conclusão
+A Card API é um projeto organizado, ideal como base para aplicativos que lidam com dados de figurinhas esportivas. Sua estrutura segue boas práticas com divisão clara entre camadas (Model, Repository, Service e Controller) e uso eficiente de Spring Boot e JPA.
